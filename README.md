@@ -9,3 +9,20 @@ This simple shell script contains three small programs in itself that can be use
 The idea is to be able to further enhance this code base to include more tools in the future.
 
 Created by Henrique Ferreira <henriquedantasferreira@gmail.com> @ 2025-03-04
+
+# usage
+<code>sh monitor.sh</code>
+
+Example:
+
+<pre><code>hferreira@localmachine:~/Desktop/Dev/monitor$ sh monitor.sh 
+################################
+       Monitoring Menu          
+################################
+1) Analyze disk space
+2) Process Checker
+3) Connectivity Checker
+4) Exit
+################################
+Select an option: 
+</code></pre>
