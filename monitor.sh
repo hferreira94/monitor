@@ -23,6 +23,30 @@ analyze_disk() {
 	find "$dir" -type f -exec du -h {} + | sort -rh | head -5
 }
 
+#### Process Checker #####
+#
+# takes a pid or a process name and looks it up to see if it's running on the system.
+#
+#
+#
+##############################
+
+process_checker() {
+	read -p "Enter process name or PID: " proc
+	if [ -z "$proc" ]; then
+		echo "No input provided. Returning to the menu."
+		return
+	fi
+	process_info=$(ps aux | grep -w "$proc" | grep -v grep)
+	if [ -z "$process_info" ]; then
+		echo "Process '$proc' is NOT running."
+		return
+	fi
+	echo "Process '$proc' is running. Some details about this proc:"
+	echo "-----------------------------------------------------------"
+	echo "$process_info" | awk '{print "User: " $1 "\nPID: " $2 "\nCPU%: " $3 "\nMEM%: " $4 "\nCommand: " $11 "\n"}'
+}
+
 #### Main menu
 #
 # creates an interactive main menu to access the features of the monitor script
@@ -36,13 +60,15 @@ while true; do
 	echo "       Monitoring Menu          "
 	echo "################################"
 	echo "1) Analyze disk space"
-	echo "2) Exit"
+	echo "2) Process Checker"
+	echo "3) Exit"
 	echo "################################"
 	read -p "Select an option: " user_choice
 	
 	case $user_choice in
 		1) analyze_disk ;;
-		2) echo "Exiting the monitor program."; exit 0 ;;
+		2) process_checker ;;
+		3) echo "Exiting the monitor program."; exit 0 ;;
 		*) echo "Invalid option. Please try again." ;;
 	esac
 
